@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/jefe/documents/{document}/edit', [JefeController::class, 'edit'])->name('jefe.documents.edit');
         Route::put('/jefe/documents/{document}', [JefeController::class, 'update'])->name('jefe.documents.update');
         Route::delete('/jefe/documents/{document}', [JefeController::class, 'destroy'])->name('jefe.documents.destroy');
+        Route::get('/jefe/documents/search', [JefeController::class, 'search'])->name('jefe.documents.search');
     });
 
     // Rutas para la Secretaria
