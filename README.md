@@ -16,7 +16,10 @@ Ahora instalar composer:
 ```sh
 composer install
 ```
-
+Instalar npm:
+```sh
+npm install
+```
 Generar la Key:
 
 ```sh
