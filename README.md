@@ -47,7 +47,7 @@ php artisan db:seed
 ```
 Ejecutamos el siguiente comando:
 ```sh
-php artisan serve
+nom run dev
 ```
 
 y por ultimo 
