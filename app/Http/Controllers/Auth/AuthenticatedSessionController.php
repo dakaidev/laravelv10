@@ -12,30 +12,31 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Display the login view.
-     */
-    public function create(): View
+    public function create()
     {
         return view('auth.login');
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->authenticate();
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        $request->session()->regenerate();
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+            // Redirigir según el rol del usuario
+            return $this->redirectBasedOnRole();
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
-    /**
-     * Destroy an authenticated session.
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
         Auth::guard('web')->logout();
 
@@ -44,5 +45,20 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    protected function redirectBasedOnRole()
+    {
+        $user = Auth::user();
+
+        if ($user->user_type_id == 1) { // admin
+            return redirect()->route('admin.index');
+        } elseif ($user->user_type_id == 2) { // jefe
+            return redirect()->route('jefe.index');
+        } elseif ($user->user_type_id == 3) { // secretaria
+            return redirect()->route('secretaria.index');
+        }
+
+        return redirect('/'); // default fallback
     }
 }
