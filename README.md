@@ -47,7 +47,7 @@ php artisan db:seed
 ```
 Ejecutamos el siguiente comando:
 ```sh
-nom run dev
+npm run dev
 ```
 
 y por ultimo 
