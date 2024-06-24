@@ -3,16 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JefeController;
+use App\Http\Controllers\SecretariaController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +20,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::resource('admin', AdminController::class);
+        // Rutas específicas del admin
+    });
+
+    Route::middleware(['role:jefe'])->group(function () {
+        Route::resource('jefe', JefeController::class);
+        // Rutas específicas del jefe
+    });
+
+    Route::middleware(['role:secretaria'])->group(function () {
+        Route::resource('secretaria', SecretariaController::class);
+        // Rutas específicas del secretaria
+    });
 });
 
 require __DIR__.'/auth.php';
