@@ -13,40 +13,46 @@ Una vez que esté descargado, debes hacer una copia a `.env`.
 cp .env.example .env
 ```
 Ahora instalar composer:
-
 ```sh
-cd mv
-```
-```sh
-cd Scripts
-```
-```sh
-activate
+composer install
 ```
 
-Regresamos a `/apiTrivIARaymundo` y a continuacion instalamos lo siguiente:
+Generar la Key:
 
 ```sh
-pip install fastapi uvicorn
+php artisan key:generate
 ```
-```sh
-pip install scikit-learn sqlalchemy pymysql
-```
-```sh
-pip install pandas
-```
-```sh
-pip install cryptography
-```
-## Configuración
 
-Ir a `config/dbp.py` y modificar la contraseña de mysql `contraseña` y el nombre de tu base de datos `basededatos` :
-```sh
-URL_DATABASE = 'mysql+pymysql://root:contraseña@localhost:3306/basededatos'
-```
-## Iniciar
+# Configuración
 
-En `/apiTrivIARaymundo` ejecutar:
-```sh
-uvicorn main:app --reload
+Ahora debes configurar algunos datos para tu aplicación, como la el nombre de la BD. Dirígete al archivo `.env`. Aqui modificar el nombre por `databaseSGD` como se muestra acontinuación:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=databaseSGD
+DB_USERNAME=root
+DB_PASSWORD=
 ```
+ahora hacer la migracion:
+```sh
+php artisan migrate
+```
+A continuación se mostrara el siguiente mensaje `Would you like to create it? (yes/no) [no]`, escribir  `yes` para crear el DB.
+
+Ahora crearemos el `admin` donde el ususario sera `admin@gmail.com` y la contraseña `0T1producci0n`, tambien se crearan algunas tablas con datos por default en la carpeta seeders.
+```sh
+php artisan db:seed
+```
+Ejecutamos el siguiente comando:
+```sh
+php artisan serve
+```
+
+y por ultimo 
+```sh
+php artisan serve
+```
+
+
