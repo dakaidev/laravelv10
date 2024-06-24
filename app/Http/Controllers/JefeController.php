@@ -43,15 +43,15 @@ class JefeController extends Controller
 
         $document = Document::create($request->all());
 
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('documents');
-            DocumentFile::create([
-                'document_id' => $document->id,
-                'file_path' => $path,
-            ]);
-        }
+    if ($request->hasFile('file')) {
+        $path = $request->file('file')->store('documents');
+        DocumentFile::create([
+            'document_id' => $document->id,
+            'file_path' => $path,
+        ]);
+    }
 
-        return redirect()->route('jefe.documents.index')->with('success', 'Document added successfully');
+    return redirect()->route('jefe.documents.index')->with('success', 'Document added successfully');
     }
 
     public function edit(Document $document)
@@ -85,7 +85,15 @@ class JefeController extends Controller
 
     public function destroy(Document $document)
     {
+        // Eliminar los archivos asociados al documento del sistema de archivos y de la base de datos
+        $document->files()->each(function($file) {
+            Storage::delete($file->file_path);
+            $file->delete();
+        });
+
+        // Ahora puedes eliminar el documento
         $document->delete();
+
         return redirect()->route('jefe.documents.index')->with('success', 'Document deleted successfully');
     }
 

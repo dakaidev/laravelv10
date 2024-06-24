@@ -11,13 +11,12 @@ class SecretariaController extends Controller
 {
     public function index()
     {
-        // Esto es para el dashboard
-        return view('secretaria.index');
+        $documents = Document::all();
+        return view('secretaria.index', compact('documents'));
     }
 
     public function documentsIndex()
     {
-        // Esto es para el listado de documentos
         $documents = Document::all();
         return view('secretaria.documents.index', compact('documents'));
     }
@@ -81,5 +80,38 @@ class SecretariaController extends Controller
         }
 
         return redirect()->route('secretaria.documents.index')->with('success', 'Document updated successfully');
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = $request->get('search');
+            $documents = Document::where('document_number', 'like', '%' . $query . '%')
+                ->orWhere('sender', 'like', '%' . $query . '%')
+                ->orWhere('recipient', 'like', '%' . $query . '%')
+                ->orWhere('subject', 'like', '%' . $query . '%')
+                ->orWhereHas('documentType', function($q) use ($query) {
+                    $q->where('name', 'like', '%' . $query . '%');
+                })
+                ->get();
+                
+            $output = '';
+            foreach ($documents as $document) {
+                $output .= '<tr>
+                    <td>' . $document->document_number . '</td>
+                    <td>' . $document->documentType->name . '</td>
+                    <td>' . $document->sender . '</td>
+                    <td>' . $document->recipient . '</td>
+                    <td>' . $document->subject . '</td>
+                    <td>' . $document->date . '</td>
+                    <td>' . $document->received_date . '</td>
+                    <td>
+                        <a href="' . route('secretaria.documents.edit', $document->id) . '" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>';
+            }
+
+            return response()->json($output);
+        }
     }
 }

@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secretary Documents</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h2>Documents</h2>
-        <a href="{{ route('secretaria.documents.create') }}" class="btn btn-success">Add Document</a>
-        <table class="table">
+        <div class="d-flex justify-content-between">
+            <a href="{{ route('secretaria.documents.create') }}" class="btn btn-success">Add Document</a>
+            <input type="text" id="search" class="form-control" placeholder="Search Documents" style="width: 300px;">
+        </div>
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th>Document Number</th>
@@ -23,7 +27,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="document-list">
                 @foreach($documents as $document)
                     <tr>
                         <td>{{ $document->document_number }}</td>
@@ -41,5 +45,20 @@
             </tbody>
         </table>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#search').on('keyup', function(){
+                var query = $(this).val();
+                $.ajax({
+                    url:"{{ route('secretaria.documents.search') }}",
+                    type:"GET",
+                    data:{'search':query},
+                    success:function(data){
+                        $('#document-list').html(data);
+                    }
+                })
+            });
+        });
+    </script>
 </body>
 </html>

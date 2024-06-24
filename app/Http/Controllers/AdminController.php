@@ -42,7 +42,7 @@ class AdminController extends Controller
 
         return redirect()->route('admin.index')->with('success', 'User created successfully');
     }
-    
+
     public function documents_index()
     {
         $documents = Document::all();
@@ -122,5 +122,42 @@ class AdminController extends Controller
 
         $document->delete();
         return redirect()->route('admin.documents.index');
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = $request->get('search');
+            $documents = Document::where('document_number', 'like', '%' . $query . '%')
+                ->orWhere('sender', 'like', '%' . $query . '%')
+                ->orWhere('recipient', 'like', '%' . $query . '%')
+                ->orWhere('subject', 'like', '%' . $query . '%')
+                ->orWhereHas('documentType', function($q) use ($query) {
+                    $q->where('name', 'like', '%' . $query . '%');
+                })
+                ->get();
+                
+            $output = '';
+            foreach ($documents as $document) {
+                $output .= '<tr>
+                    <td>' . $document->document_number . '</td>
+                    <td>' . $document->documentType->name . '</td>
+                    <td>' . $document->sender . '</td>
+                    <td>' . $document->recipient . '</td>
+                    <td>' . $document->subject . '</td>
+                    <td>' . $document->date . '</td>
+                    <td>' . $document->received_date . '</td>
+                    <td>
+                        <a href="' . route('admin.documents.edit', $document->id) . '" class="btn btn-warning">Edit</a>
+                        <form action="' . route('admin.documents.destroy', $document->id) . '" method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field('DELETE') . '
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>';
+            }
+
+            return response()->json($output);
+        }
     }
 }

@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/documents/{document}/edit', [AdminController::class, 'documents_edit'])->name('admin.documents.edit');
         Route::put('/admin/documents/{document}', [AdminController::class, 'documents_update'])->name('admin.documents.update');
         Route::delete('/admin/documents/{document}', [AdminController::class, 'documents_destroy'])->name('admin.documents.destroy');
+        
+        Route::get('/admin/documents/search', [AdminController::class, 'search'])->name('admin.documents.search');
     });
 
     // Rutas para el Jefe
@@ -40,10 +42,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/jefe/documents/{document}/edit', [JefeController::class, 'edit'])->name('jefe.documents.edit');
         Route::put('/jefe/documents/{document}', [JefeController::class, 'update'])->name('jefe.documents.update');
         Route::delete('/jefe/documents/{document}', [JefeController::class, 'destroy'])->name('jefe.documents.destroy');
+
+        // Ruta para la búsqueda
         Route::get('/jefe/documents/search', [JefeController::class, 'search'])->name('jefe.documents.search');
     });
 
-    // Rutas para la Secretaria
     Route::middleware(['role:secretaria'])->group(function () {
         Route::get('/secretaria', [SecretariaController::class, 'index'])->name('secretaria.index');
         Route::get('/secretaria/documents', [SecretariaController::class, 'documentsIndex'])->name('secretaria.documents.index');
@@ -51,6 +54,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/secretaria/documents', [SecretariaController::class, 'store'])->name('secretaria.documents.store');
         Route::get('/secretaria/documents/{document}/edit', [SecretariaController::class, 'edit'])->name('secretaria.documents.edit');
         Route::put('/secretaria/documents/{document}', [SecretariaController::class, 'update'])->name('secretaria.documents.update');
+
+        // Ruta para la búsqueda
+        Route::get('/secretaria/documents/search', [SecretariaController::class, 'search'])->name('secretaria.documents.search');
     });
 });
 
