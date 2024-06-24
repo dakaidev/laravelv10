@@ -44,6 +44,8 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
+                            <a href="{{ route('jefe.documents.show', $document->id) }}" class="btn btn-info">View</a>
+                            <a href="{{ route('jefe.documents.download', $document->id) }}" class="btn btn-primary">Download</a>
                         </td>
                     </tr>
                 @endforeach

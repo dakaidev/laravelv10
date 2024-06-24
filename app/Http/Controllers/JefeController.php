@@ -83,6 +83,23 @@ class JefeController extends Controller
         return redirect()->route('jefe.documents.index')->with('success', 'Document updated successfully');
     }
 
+    public function show(Document $document)
+    {
+        $files = $document->files;
+        return view('jefe.documents.show', compact('document', 'files'));
+    }
+
+    public function download(DocumentFile $file)
+    {
+        if (Storage::exists($file->file_path)) {
+            return Storage::download($file->file_path);
+        }
+        return redirect()->back()->with('error', 'File not found.');
+    }
+
+
+
+
     public function destroy(Document $document)
     {
         // Eliminar los archivos asociados al documento del sistema de archivos y de la base de datos

@@ -32,20 +32,23 @@ Route::middleware(['auth'])->group(function () {
         
         Route::get('/admin/documents/search', [AdminController::class, 'search'])->name('admin.documents.search');
     });
+ // Rutas para el Jefe
+ Route::middleware(['role:jefe'])->group(function () {
+    Route::get('/jefe', [JefeController::class, 'index'])->name('jefe.index');
+    Route::get('/jefe/documents', [JefeController::class, 'documentsIndex'])->name('jefe.documents.index');
+    Route::get('/jefe/documents/create', [JefeController::class, 'create'])->name('jefe.documents.create');
+    Route::post('/jefe/documents', [JefeController::class, 'store'])->name('jefe.documents.store');
+    Route::get('/jefe/documents/{document}/edit', [JefeController::class, 'edit'])->name('jefe.documents.edit');
+    Route::put('/jefe/documents/{document}', [JefeController::class, 'update'])->name('jefe.documents.update');
+    Route::delete('/jefe/documents/{document}', [JefeController::class, 'destroy'])->name('jefe.documents.destroy');
 
-    // Rutas para el Jefe
-    Route::middleware(['role:jefe'])->group(function () {
-        Route::get('/jefe', [JefeController::class, 'index'])->name('jefe.index');
-        Route::get('/jefe/documents', [JefeController::class, 'documentsIndex'])->name('jefe.documents.index');
-        Route::get('/jefe/documents/create', [JefeController::class, 'create'])->name('jefe.documents.create');
-        Route::post('/jefe/documents', [JefeController::class, 'store'])->name('jefe.documents.store');
-        Route::get('/jefe/documents/{document}/edit', [JefeController::class, 'edit'])->name('jefe.documents.edit');
-        Route::put('/jefe/documents/{document}', [JefeController::class, 'update'])->name('jefe.documents.update');
-        Route::delete('/jefe/documents/{document}', [JefeController::class, 'destroy'])->name('jefe.documents.destroy');
-
-        // Ruta para la búsqueda
-        Route::get('/jefe/documents/search', [JefeController::class, 'search'])->name('jefe.documents.search');
-    });
+    // Ruta para la búsqueda
+    Route::get('/jefe/documents/search', [JefeController::class, 'search'])->name('jefe.documents.search');
+    
+    // Rutas para ver y descargar documentos
+    Route::get('/jefe/documents/{document}', [JefeController::class, 'show'])->name('jefe.documents.show');
+    Route::get('/jefe/documents/file/{file}/download', [JefeController::class, 'download'])->name('jefe.documents.download');
+});
 
     Route::middleware(['role:secretaria'])->group(function () {
         Route::get('/secretaria', [SecretariaController::class, 'index'])->name('secretaria.index');
