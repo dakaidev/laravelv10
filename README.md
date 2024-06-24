@@ -1,31 +1,61 @@
-# Laravelv10 - Sistema de Gestión Documental
+# Descargar
 
-Este proyecto es una implementación de un Sistema de Gestión Documental utilizando Laravel 10.
-
-## Descargar
-
-Para clonar el repositorio, ejecuta:
+Para descargar, ejecuta:
 
 ```sh
 git clone https://github.com/dakaidev/laravelv10.git
+```
 
-# Configura la conexión a la base de datos en el archivo `.env`
-# Asegúrate de que estas variables estén configuradas correctamente:
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=databaseSGD
-# DB_USERNAME=root
-# DB_PASSWORD=
+# Instalacion
+Una vez que esté descargado, debes hacer una copia a `.env`.
 
-# Ejecuta las migraciones y crea la base de datos cuando se te solicite
+```sh
+cp .env.example .env
+```
+Ahora instalar composer:
+```sh
+composer install
+```
+Instalar npm:
+```sh
+npm install
+```
+Generar la Key:
+
+```sh
+php artisan key:generate
+```
+
+# Configuración
+
+Ahora debes configurar algunos datos para tu aplicación, como la el nombre de la BD. Dirígete al archivo `.env`. Aqui modificar el nombre por `databaseSGD` como se muestra acontinuación:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=databaseSGD
+DB_USERNAME=root
+DB_PASSWORD=
+```
+ahora hacer la migracion:
+```sh
 php artisan migrate
+```
+A continuación se mostrara el siguiente mensaje `Would you like to create it? (yes/no) [no]`, escribir  `yes` para crear el DB.
 
-# Pobla la base de datos con datos de ejemplo, incluyendo la creación de un administrador (admin@gmail.com / 0T1producci0n)
+Ahora crearemos el `admin` donde el ususario sera `admin@gmail.com` y la contraseña `0T1producci0n`, tambien se crearan algunas tablas con datos por default en la carpeta seeders.
+```sh
 php artisan db:seed
-
-# Inicia el servidor de desarrollo
+```
+Ejecutamos el siguiente comando:
+```sh
 php artisan serve
+```
 
-# Compila los assets de frontend
+y por ultimo 
+```sh
 npm run dev
+```
+
+
