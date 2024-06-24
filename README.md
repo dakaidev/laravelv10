@@ -48,7 +48,7 @@ Ahora crearemos el `admin` donde el ususario sera `admin@gmail.com` y la contras
 ```sh
 php artisan db:seed
 ```
-Ejecutamos el siguiente comando:
+Inicia el servidor de desarrollo:
 ```sh
 php artisan serve
 ```
