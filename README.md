@@ -16,7 +16,10 @@ Ahora instalar composer:
 ```sh
 composer install
 ```
-
+Instalar npm:
+```sh
+npm install
+```
 Generar la Key:
 
 ```sh
@@ -45,14 +48,14 @@ Ahora crearemos el `admin` donde el ususario sera `admin@gmail.com` y la contras
 ```sh
 php artisan db:seed
 ```
-Ejecutamos el siguiente comando:
+Inicia el servidor de desarrollo:
 ```sh
 php artisan serve
 ```
 
 y por ultimo 
 ```sh
-php artisan serve
+npm run dev
 ```
 
 
