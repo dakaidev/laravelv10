@@ -57,6 +57,8 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('jefe.index');
         } elseif ($user->user_type_id == 3) { // secretaria
             return redirect()->route('secretaria.index');
+        } elseif ($user->user_type_id == 4) { // especialista
+            return redirect()->route('especialista.index');
         }
 
         return redirect('/'); // default fallback

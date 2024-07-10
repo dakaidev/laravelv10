@@ -20,7 +20,7 @@
         <ul>
             @foreach ($files as $file)
                 <li>
-                    <a href="{{ route('jefe.documents.download', $file->id) }}">{{ $file->file_path }}</a>
+                    <a href="{{ route('secretaria.documents.download', $file->id) }}">{{ $file->file_path }}</a>
                 </li>
             @endforeach
         </ul>

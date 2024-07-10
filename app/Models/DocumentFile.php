@@ -9,10 +9,15 @@ class DocumentFile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['document_id', 'file_path'];
+    protected $fillable = ['document_id', 'file_path', 'uploaded_by'];
 
     public function document()
     {
         return $this->belongsTo(Document::class);
+    }
+
+    public function uploader()
+    {
+        return $this->belongsTo(User::class, 'uploaded_by');
     }
 }

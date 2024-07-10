@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             UserTypeSeeder::class, // Asegúrate de que esto está aquí si tienes el UserTypeSeeder
             AdminUserSeeder::class,
             DocumentTypeSeeder::class,
+            OfficeSeeder::class,
         ]);
     }
 }

@@ -11,7 +11,6 @@
         <h2>Secretary Dashboard</h2>
         <a href="{{ route('secretaria.documents.create') }}" class="btn btn-success">Add Document</a>
         <a href="{{ route('secretaria.documents.index') }}" class="btn btn-primary">Manage Documents</a>
-        
         <!-- Formulario de Logout -->
         <form method="POST" action="{{ route('logout') }}" style="display: inline;">
             @csrf

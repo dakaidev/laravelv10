@@ -9,7 +9,8 @@
 <body>
     <div class="container">
         <h2>Edit Document</h2>
-        <form method="POST" action="{{ route('jefe.documents.update', $document->id) }}" enctype="multipart/form-data">
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+        <form method="POST" action="{{ route('jefe.documents.update', $document->id) }}">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -44,12 +45,12 @@
                 <label for="received_date">Received Date</label>
                 <input type="date" name="received_date" id="received_date" class="form-control" value="{{ $document->received_date }}" required>
             </div>
-            <div class="form-group">
-                <label for="file">File</label>
-                <input type="file" name="file" id="file" class="form-control">
-                <small>Leave blank if you don't want to update the file</small>
-            </div>
             <button type="submit" class="btn btn-success">Update Document</button>
+        </form>
+        <!-- Formulario de Logout -->
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-danger">Logout</button>
         </form>
     </div>
 </body>

@@ -13,5 +13,6 @@ class UserTypeSeeder extends Seeder
         UserType::firstOrCreate(['name' => 'admin'], ['description' => 'Administrator']);
         UserType::firstOrCreate(['name' => 'jefe'], ['description' => 'Jefe']);
         UserType::firstOrCreate(['name' => 'secretaria'], ['description' => 'Secretaria']);
+        UserType::firstOrCreate(['name' => 'especialista'], ['description' => 'Especialista']);
     }
 }

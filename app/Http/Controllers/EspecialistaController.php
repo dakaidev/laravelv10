@@ -4,27 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\DocumentType;
-use App\Models\DocumentFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
-class SecretariaController extends Controller
+class EspecialistaController extends Controller
 {
     public function index()
     {
-        return view('secretaria.index');
+        return view('especialista.index');
     }
 
     public function documentsIndex()
     {
         $documents = Document::with('documentType')->where('office_id', auth()->user()->office_id)->get();
-        return view('secretaria.documents.index', compact('documents'));
+        return view('especialista.documents.index', compact('documents'));
     }
 
     public function create()
     {
         $document_types = DocumentType::all();
-        return view('secretaria.documents.create', compact('document_types'));
+        return view('especialista.documents.create', compact('document_types'));
     }
 
     public function store(Request $request)
@@ -60,13 +58,13 @@ class SecretariaController extends Controller
             ]);
         }
 
-        return redirect()->route('secretaria.documents.index')->with('success', 'Document added successfully');
+        return redirect()->route('especialista.documents.index')->with('success', 'Document added successfully');
     }
 
     public function edit(Document $document)
     {
         $document_types = DocumentType::all();
-        return view('secretaria.documents.edit', compact('document', 'document_types'));
+        return view('especialista.documents.edit', compact('document', 'document_types'));
     }
 
     public function update(Request $request, Document $document)
@@ -83,7 +81,7 @@ class SecretariaController extends Controller
 
         $document->update($request->all());
 
-        return redirect()->route('secretaria.documents.index')->with('success', 'Document updated successfully');
+        return redirect()->route('especialista.documents.index')->with('success', 'Document updated successfully');
     }
 
     public function search(Request $request)
@@ -102,15 +100,4 @@ class SecretariaController extends Controller
         return response()->json(['documents' => $documents]);
     }
     
-
-    public function show(Document $document)
-    {
-        $files = $document->files;
-        return view('secretaria.documents.show', compact('document', 'files'));
-    }
-
-    public function download(DocumentFile $file)
-    {
-        return Storage::download($file->file_path);
-    }
 }

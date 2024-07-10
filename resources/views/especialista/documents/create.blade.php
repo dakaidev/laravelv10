@@ -10,7 +10,7 @@
     <div class="container">
         <h2>Create Document</h2>
         <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
-        <form method="POST" action="{{ route('jefe.documents.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('especialista.documents.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="document_number">Document Number</label>
@@ -58,3 +58,4 @@
     </div>
 </body>
 </html>
+

@@ -12,9 +12,13 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'user_type_id'];
+    protected $fillable = [
+        'name', 'email', 'password', 'user_type_id', 'office_id',
+    ];
 
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -23,5 +27,15 @@ class User extends Authenticatable
     public function userType()
     {
         return $this->belongsTo(UserType::class);
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
+
+    public function documentFiles()
+    {
+        return $this->hasMany(DocumentFile::class, 'uploaded_by');
     }
 }

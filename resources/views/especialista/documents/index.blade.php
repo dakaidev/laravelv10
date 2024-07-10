@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jefe Documents</title>
+    <title>Especialista Documents</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h2>Documents</h2>
-        <a href="{{ route('jefe.documents.create') }}" class="btn btn-success">Add Document</a>
+        <a href="{{ route('especialista.documents.create') }}" class="btn btn-success">Add Document</a>
         <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
         <input type="text" id="search" class="form-control" placeholder="Search documents">
         <table class="table">
@@ -37,13 +37,7 @@
                         <td>{{ $document->date }}</td>
                         <td>{{ $document->received_date }}</td>
                         <td>
-                            <a href="{{ route('jefe.documents.edit', $document->id) }}" class="btn btn-warning">Edit</a>
-                            <a href="{{ route('jefe.documents.show', $document->id) }}" class="btn btn-info">View</a>
-                            <form action="{{ route('jefe.documents.destroy', $document->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                            <a href="{{ route('especialista.documents.edit', $document->id) }}" class="btn btn-warning">Edit</a>
                         </td>
                     </tr>
                 @endforeach
@@ -60,7 +54,7 @@
             $('#search').on('keyup', function(){
                 var query = $(this).val();
                 $.ajax({
-                    url: "{{ route('jefe.documents.search') }}",
+                    url: "{{ route('especialista.documents.search') }}",
                     type: "GET",
                     data: {'query': query},
                     success: function(data){
@@ -75,13 +69,7 @@
                                 '<td>' + document.date + '</td>' +
                                 '<td>' + document.received_date + '</td>' +
                                 '<td>' +
-                                    '<a href="/jefe/documents/' + document.id + '/edit" class="btn btn-warning">Edit</a> ' +
-                                    '<a href="/jefe/documents/' + document.id + '" class="btn btn-info">View</a> ' +
-                                    '<form action="/jefe/documents/' + document.id + '" method="POST" style="display:inline;">' +
-                                        '@csrf' +
-                                        '@method("DELETE")' +
-                                        '<button type="submit" class="btn btn-danger">Delete</button>' +
-                                    '</form>' +
+                                    '<a href="/especialista/documents/' + document.id + '/edit" class="btn btn-warning">Edit</a> ' +
                                 '</td>' +
                             '</tr>';
                             $('#documents-table').append(row);
