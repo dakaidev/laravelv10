@@ -15,11 +15,11 @@ class OfficeSeeder extends Seeder
     public function run()
     {
         $offices = [
-            ['name' => 'Oficina de Administración'],
-            ['name' => 'Oficina de Recursos Humanos'],
-            ['name' => 'Oficina de Tecnología e Informática'],
-            ['name' => 'Oficina de Finanzas'],
-            ['name' => 'Oficina de Planeamiento'],
+            ['name' => 'Comunidad Campesina de Taquile'],
+            ['name' => 'Asociación de Artesanos de Taquile'],
+            ['name' => 'Oficina Comunal de Cultura y Turismo'],
+            ['name' => 'Oficina Comunal de Medio Ambiente'],
+            ['name' => 'Archivo Histórico de Taquile'],
         ];
 
         foreach ($offices as $office) {
